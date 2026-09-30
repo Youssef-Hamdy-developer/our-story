@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forever Love ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100vw; height: 100vh; overflow: hidden; background: #fce8ef; }
+
+        /* ===== ANIMATED PINK BACKGROUND ===== */
+        .bg-layer {
+            position: fixed; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 75% 65% at 15% 20%, #ffd0e4 0%, transparent 55%),
+                radial-gradient(ellipse 65% 55% at 85% 80%, #ffe2ee 0%, transparent 55%),
+                radial-gradient(ellipse 55% 65% at 50% 50%, #fff5f8 0%, transparent 70%),
+                #fce8ef;
+            animation: bgPulse 12s ease-in-out infinite;
+        }
+        @keyframes bgPulse { 
+            0%, 100% { opacity: 1; transform: scale(1); } 
+            50% { opacity: 0.88; transform: scale(1.03); } 
+        }
+
+        /* ===== PARTICLES & VIGNETTE ===== */
+        #bgParts { position: fixed; inset: 0; z-index: 2; pointer-events: none; }
+        .vignette {
+            position: fixed; inset: 0; z-index: 3; pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 45%, rgba(240, 190, 210, 0.35) 100%);
+        }
+
+        /* ===== SLIDESHOW CONTAINER (3D PERSPECTIVE) ===== */
+        .slideshow { 
+            position: fixed; inset: 0; z-index: 4; 
+            perspective: 1200px;
+        }
+
+        /* DEEP 3D IMMERSIVE SLIDE TRANSITION */
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0;
+            transform: scale(0.76) translateY(45px) rotateX(14deg) rotateY(-8deg);
+            filter: blur(10px);
+            transition: opacity 1.1s cubic-bezier(0.25, 1, 0.5, 1),
+                        transform 1.15s cubic-bezier(0.34, 1.45, 0.64, 1),
+                        filter 1.1s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .slide.active { 
+            opacity: 1; 
+            transform: scale(1) translateY(0) rotateX(0deg) rotateY(0deg); 
+            filter: blur(0px);
+            pointer-events: auto; 
+            z-index: 2;
+        }
+
+        /* ===== STICKER WRAPPER ===== */
+        .sticker-wrap {
+            position: relative;
+        }
+        .slide.active .sticker-wrap {
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.2deg); }
+        }
+
+        /* LAYER 1: GIANT PULSING HEART AURA DEEP BEHIND CARD */
+        .sticker-wrap::after {
+            content: '💗';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(1.5);
+            font-size: 15rem;
+            color: rgba(255, 170, 200, 0.4);
+            z-index: -3;
+            pointer-events: none;
+            filter: blur(14px);
+            opacity: 0.75;
+            animation: heartPulseAura 3.5s ease-in-out infinite alternate;
+        }
+        @keyframes heartPulseAura {
+            0% { transform: translate(-50%, -50%) scale(1.35) rotate(-5deg); opacity: 0.4; }
+            100% { transform: translate(-50%, -50%) scale(1.75) rotate(5deg); opacity: 0.85; }
+        }
+
+        /* LAYER 2: ROTATING SOFT GLOW HALO */
+        .sticker-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -18px;
+            border-radius: 36px;
+            background: radial-gradient(circle, rgba(255, 160, 200, 0.6) 0%, rgba(255, 210, 230, 0.35) 55%, transparent 75%);
+            z-index: -2;
+            filter: blur(18px);
+            opacity: 0.8;
+            animation: haloPulse 3.5s ease-in-out infinite alternate;
+        }
+        @keyframes haloPulse {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            100% { transform: scale(1.15); opacity: 0.9; }
+        }
+
+        /* LAYER 3: SCRAPBOOK POLAROID TILTED BACK-CARD BEHIND IMAGE */
+        .card-back-layer {
+            position: absolute;
+            inset: -7px;
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 225, 238, 0.9));
+            box-shadow: 0 12px 32px rgba(220, 80, 130, 0.18), inset 0 0 15px rgba(255, 255, 255, 0.9);
+            z-index: -1;
+            transform: rotate(-3deg) scale(1.02);
+            animation: backLayerFloat 4s ease-in-out infinite alternate;
+        }
+        @keyframes backLayerFloat {
+            0% { transform: rotate(-3.5deg) scale(1.02); }
+            100% { transform: rotate(2.5deg) scale(1.04); }
+        }
+
+        .sticker-img {
+            width: min(58vw, 300px);
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 14px 28px rgba(220, 90, 135, 0.15))
+                    drop-shadow(0 4px 10px rgba(255, 150, 180, 0.2));
+            border-radius: 22px;
+            background: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== DECO FLOATS (BROUGHT CLOSE TO CARD) ===== */
+        .deco {
+            position: absolute; z-index: 6;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            pointer-events: none; 
+            font-size: 1.5rem;
+        }
+        .slide.active .deco { 
+            opacity: 0.85; 
+        }
+        .deco span { 
+            display: inline-block; 
+            animation: gf 4s ease-in-out infinite; 
+            filter: drop-shadow(0 4px 10px rgba(230, 90, 140, 0.35));
+        }
+        @keyframes gf {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-12px) rotate(10deg) scale(1.15); }
+        }
+
+        /* ===== INTRO SCREEN ===== */
+        .intro {
+            position: fixed; inset: 0; z-index: 50;
+            background: linear-gradient(135deg, #fff0f5, #ffd6e6, #fff8fa);
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 18px;
+            transition: opacity 1.2s ease;
+        }
+        .intro.gone { opacity: 0; pointer-events: none; }
+        .intro-heart { font-size: 4rem; animation: hb 1.2s ease-in-out infinite; }
+        @keyframes hb {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.18); }
+        }
+        .intro-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.7rem; color: #c44569;
+            opacity: 0; animation: fu 1s 0.5s ease forwards;
+        }
+        @keyframes fu { to { opacity: 1; transform: translateY(-8px); } }
+        /* ===== PROGRESS BAR ===== */
+        .pbar {
+            position: fixed; top: 0; left: 0; height: 4px;
+            background: linear-gradient(90deg, #ff758c, #ff7eb3, #ff4d6d);
+            box-shadow: 0 0 10px rgba(255, 77, 109, 0.7);
+            z-index: 100;
+            transition: width 0.1s linear;
+        }
+
+        /* ===== REPLAY BUTTON ===== */
+        .rbtn {
+            position: fixed; bottom: 35px; left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 100;
+            padding: 13px 32px;
+            font-size: 1.15rem;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6584, #ff4757);
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.45), 0 0 0 4px rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .rbtn.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) scale(1);
+        }
+        .rbtn:hover {
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.6), 0 0 0 5px rgba(255, 255, 255, 0.9);
+        }
+        .rbtn:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        /* ===== CINEMATIC TRANSITION TO COUNTER ===== */
+        .page-transition {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+            background:
+                radial-gradient(circle at center, rgba(255,255,255,.95) 0%, rgba(255,210,228,.92) 24%, rgba(252,232,239,.98) 58%, rgba(241,184,207,1) 100%);
+            transition: opacity .85s ease;
+        }
+        .page-transition::before {
+            content: '💗';
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%) scale(.35);
+            font-size: 7rem;
+            filter: drop-shadow(0 10px 28px rgba(220,70,120,.28));
+            opacity: 0;
+        }
+        .page-transition.leaving {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .page-transition.leaving::before {
+            animation: transitionHeart 1.05s cubic-bezier(.2,.85,.25,1) forwards;
+        }
+        @keyframes transitionHeart {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(.35); }
+            22% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+            48% { opacity: 1; transform: translate(-50%, -50%) scale(.95); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(8); }
+        }
+        body.leaving .slideshow,
+        body.leaving .bg-layer,
+        body.leaving #bgParts,
+        body.leaving .vignette,
+        body.leaving .pbar,
+        body.leaving .rbtn {
+            transition: opacity .8s ease, filter .8s ease, transform .8s ease;
+            opacity: 0 !important;
+            filter: blur(8px);
+            transform: scale(1.035);
+        }
+
+        /* ===== FINAL SLIDE GRAND CELEBRATION STYLES ===== */
+        .slide.is-final.active .sticker-wrap::before {
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.95) 0%, rgba(255, 215, 0, 0.65) 45%, transparent 75%);
+            filter: blur(22px);
+            animation: finalHalo 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes finalHalo {
+            0% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+        .slide.is-final.active .card-back-layer {
+            box-shadow: 0 16px 45px rgba(255, 60, 130, 0.4), 0 0 35px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.95);
+            animation: finalBackLayerFloat 3.5s ease-in-out infinite alternate;
+        }
+        @keyframes finalBackLayerFloat {
+            0% { transform: rotate(-4deg) scale(1.03); }
+            100% { transform: rotate(3deg) scale(1.06); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Intro -->
+<div class="intro" id="intro">
+    <div class="intro-heart">💕</div>
+    <div class="intro-text">For you, with all my heart...</div>
+</div>
+
+<!-- Background -->
+<div class="bg-layer"></div>
+<div class="vignette"></div>
+<canvas id="bgParts"></canvas>
+
+<!-- Slideshow -->
+<div class="slideshow" id="ss"></div>
+
+<!-- UI -->
+<div class="pbar" id="pbar" style="width:0"></div>
+<button class="rbtn" id="rbtn">كمّلي 💕</button>
+<div class="page-transition" id="pageTransition"></div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const SLIDE_DUR = 3000; // Fast & punchy for Reels (3 seconds)
+const INTRO_DUR = 2000;
+
+const slides = [
+    { img: 'images/photo_2026-09-26_22-08-35.jpg'    },
+    { img: 'images/photo_2026-09-26_22-08-36.jpg'    },
+    { img: 'images/photo_2026-09-26_22-08-36 (2).jpg'},
+    { img: 'images/photo_2026-09-26_22-08-36 (3).jpg'},
+    { img: 'images/photo_2026-09-26_22-08-37.jpg'    },
+];
+
+// Decos positioned further out with a spacious ~190-210px gap
+const decos = [
+    [
+        {t:'-65px', l:'-195px', e:'💕', d:'0s'  },
+        {t:'-60px', r:'-190px', e:'✨', d:'1.2s'},
+        {b:'-5px',  l:'-205px', e:'💖', d:'.6s' },
+        {b:'0px',   r:'-195px', e:'🌸', d:'1.8s'}
+    ],
+    [
+        {t:'-58px', r:'-200px', e:'💗', d:'.4s' },
+        {t:'-66px', l:'-188px', e:'✨', d:'1.4s'},
+        {b:'10px',  r:'-210px', e:'💕', d:'.9s' },
+        {b:'-10px', l:'-192px', e:'🌸', d:'2s'  }
+    ],
+    [
+        {t:'-70px', l:'-198px', e:'💖', d:'.2s' },
+        {t:'-55px', r:'-190px', e:'🌸', d:'1.3s'},
+        {b:'0px',   l:'-185px', e:'✨', d:'.7s' },
+        {b:'5px',   r:'-200px', e:'💗', d:'1.9s'}
+    ],
+    [
+        {t:'-52px', r:'-192px', e:'💕', d:'.5s' },
+        {t:'-72px', l:'-204px', e:'💖', d:'1.6s'},
+        {b:'2px',   r:'-188px', e:'🌸', d:'.8s' },
+        {b:'12px',  l:'-196px', e:'✨', d:'2.1s'}
+    ],
+    [
+        {t:'-70px', l:'-200px', e:'👑', d:'0s'  },
+        {t:'-65px', r:'-200px', e:'🎉', d:'1.0s'},
+        {b:'-10px', l:'-205px', e:'💖', d:'.5s' },
+        {b:'-5px',  r:'-205px', e:'🍾', d:'1.5s'},
+        {t:'45%',   l:'-225px', e:'✨', d:'0.3s'},
+        {t:'45%',   r:'-225px', e:'🌹', d:'1.2s'}
+    ],
+];
+
+// ─── BUILD SLIDES ─────────────────────────────────────────────────────────────
+const ssEl = document.getElementById('ss');
+
+slides.forEach((data, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide' + (i === slides.length - 1 ? ' is-final' : '');
+
+    // Sticker image wrapper
+    const wrap = document.createElement('div');
+    wrap.className = 'sticker-wrap';
+
+    // Scrapbook Polaroid Back Layer
+    const backLayer = document.createElement('div');
+    backLayer.className = 'card-back-layer';
+    wrap.appendChild(backLayer);
+
+    // Deco floats attached right around the sticker card
+    decos[i].forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'deco';
+        const posKeys = {t:'top', b:'bottom', l:'left', r:'right'};
+        const posStr = Object.entries(posKeys)
+            .filter(([k]) => d[k])
+            .map(([k, v]) => `${v}:${d[k]}`).join(';');
+        el.style.cssText = posStr;
+        el.innerHTML = `<span style="animation-delay:${d.d}">${d.e}</span>`;
+        wrap.appendChild(el);
+    });
+
+    const img = document.createElement('img');
+    img.src = data.img;
+    img.className = 'sticker-img';
+    img.alt = 'love sticker';
+    wrap.appendChild(img);
+
+    slide.appendChild(wrap);
+    ssEl.appendChild(slide);
+});
+
+// ─── GRAND FINALE CELEBRATION EFFECT (CONFETTI & CANNONS) ──────────────────────
+function triggerGrandFinale() {
+    clearFinale();
+    const container = document.createElement('div');
+    container.id = 'finaleContainer';
+    container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden;';
+    document.body.appendChild(container);
+
+    const colors = ['#ff4d6d', '#ffd700', '#ff758c', '#e84393', '#a29bfe', '#fd79a8', '#ff7675', '#ffffff'];
+    const emojis = ['🎉', '🥳', '✨', '💖', '👑', '🌹', '🍾', '💕', '💗'];
+    const styleEl = document.createElement('style');
+    let css = '';
+
+    // 1. Confetti Rain (40 pieces)
+    for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const startX = Math.random() * 100;
+        const sizeW = 7 + Math.random() * 7;
+        const sizeH = 11 + Math.random() * 10;
+        const duration = 2.2 + Math.random() * 1.8;
+        const delay = Math.random() * 1.2;
+        const rot = Math.random() * 720;
+        const animName = `confetti_${Date.now()}_${i}`;
+
+        css += `
+            @keyframes ${animName} {
+                0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 1; }
+                100% { transform: translate3d(${(Math.random() - 0.5) * 120}px, 105vh, 0) rotate(${rot}deg); opacity: 0; }
+            }
+        `;
+
+        p.style.cssText = `
+            position: absolute;
+            left: ${startX}vw; top: -20px;
+            width: ${sizeW}px; height: ${sizeH}px;
+            background: ${color};
+            border-radius: ${Math.random() < 0.5 ? '50%' : '3px'};
+            animation: ${animName} ${duration}s ${delay}s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+        `;
+        container.appendChild(p);
+    }
+
+    // 2. Celebration Cannons (Bottom corners)
+    for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        const emo = emojis[Math.floor(Math.random() * emojis.length)];
+        const isLeft = i % 2 === 0;
+        const startLeft = isLeft ? 12 : 88;
+        const angle = isLeft ? (-Math.PI / 4 - Math.random() * 0.4) : (-Math.PI * 3 / 4 + Math.random() * 0.4);
+        const dist = 180 + Math.random() * 240;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist;
+        const animName = `cannon_${Date.now()}_${i}`;
+
+        css += `
+            @keyframes ${animName} {
+                0% { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 1; }
+                50% { opacity: 1; }
+                100% { transform: translate(${tx}px, ${ty}px) scale(1.35) rotate(${Math.random() * 360}deg); opacity: 0; }
+            }
+        `;
+
+        p.innerText = emo;
+        p.style.cssText = `
+            position: absolute;
+            left: ${startLeft}%; bottom: 12%;
+            font-size: ${1.4 + Math.random() * 1.4}rem;
+            animation: ${animName} 2.2s ${Math.random() * 1.0}s ease-out infinite;
+            filter: drop-shadow(0 4px 12px rgba(255, 100, 150, 0.5));
+        `;
+        container.appendChild(p);
+    }
+
+    styleEl.innerHTML = css;
+    document.head.appendChild(styleEl);
+}
+
+function clearFinale() {
+    const fc = document.getElementById('finaleContainer');
+    if (fc) fc.remove();
+}
+
+// ─── HEART BURST PARTICLES EFFECT ON SLIDE TRANSITION ────────────────────────
+function createHeartBurst() {
+    const container = document.createElement('div');
+    container.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden;';
+    document.body.appendChild(container);
+
+    const emojis = ['💕', '💖', '✨', '🌸', '💗', '❤️', '🌹', '🎀'];
+    const count = 18;
+    const styleEl = document.createElement('style');
+    let cssRules = '';
+
+    for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        const emo = emojis[Math.floor(Math.random() * emojis.length)];
+        const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
+        const dist = 140 + Math.random() * 160;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist - 30;
+        const sz = 1.3 + Math.random() * 1.2;
+        const rot = (Math.random() - 0.5) * 60;
+        const animName = `eburst_${Date.now()}_${i}`;
+
+        cssRules += `
+            @keyframes ${animName} {
+                0% {
+                    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(1.18) rotate(${rot}deg);
+                    opacity: 0;
+                }
+            }
+        `;
+
+        p.innerText = emo;
+        p.style.cssText = `
+            position: absolute;
+            left: 50%; top: 46%;
+            font-size: ${sz}rem;
+            animation: ${animName} 1.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+            filter: drop-shadow(0 4px 12px rgba(255, 100, 150, 0.45));
+        `;
+        container.appendChild(p);
+    }
+
+    styleEl.innerHTML = cssRules;
+    document.head.appendChild(styleEl);
+
+    setTimeout(() => {
+        container.remove();
+        styleEl.remove();
+    }, 2000);
+}
+
+// ─── SLIDESHOW CONTROLLER ─────────────────────────────────────────────────────
+let cur = -1, timer = null, rafId = null, t0 = 0, done = false;
+
+function show(idx) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+
+    cur = idx;
+    document.querySelectorAll('.slide')[idx].classList.add('active');
+
+    createHeartBurst();
+
+    if (idx === slides.length - 1) {
+        triggerGrandFinale();
+    } else {
+        clearFinale();
+    }
+
+    startProgress();
+    clearTimeout(timer);
+
+    if (idx < slides.length - 1) {
+        timer = setTimeout(() => show(idx + 1), SLIDE_DUR);
+    } else {
+        timer = setTimeout(() => {
+            done = true;
+            document.getElementById('rbtn').classList.add('show');
+        }, SLIDE_DUR);
+    }
+}
+
+function startProgress() {
+    const bar = document.getElementById('pbar');
+    t0 = Date.now();
+    cancelAnimationFrame(rafId);
+    function upd() {
+        const elapsed = Date.now() - t0;
+        const total   = SLIDE_DUR * slides.length;
+        const pct     = Math.min((cur / slides.length + elapsed / total) * 100, 100);
+        bar.style.width = pct + '%';
+        if (!done) rafId = requestAnimationFrame(upd);
+        else bar.style.width = '100%';
+    }
+    upd();
+}
+
+function goToCounter() {
+    const btn = document.getElementById('rbtn');
+    const transition = document.getElementById('pageTransition');
+    if (btn.dataset.leaving === '1') return;
+
+    btn.dataset.leaving = '1';
+    btn.classList.remove('show');
+    document.body.classList.add('leaving');
+    transition.classList.add('leaving');
+
+    setTimeout(() => {
+        window.location.href = 'counter.html';
+    }, 900);
+}
+
+document.getElementById('rbtn').addEventListener('click', goToCounter);
+
+function restart() {
+    done = false;
+    clearFinale();
+    document.getElementById('rbtn').classList.remove('show');
+    document.getElementById('pbar').style.width = '0';
+    show(0);
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+setTimeout(() => {
+    document.getElementById('intro').classList.add('gone');
+    setTimeout(() => show(0), 750);
+}, INTRO_DUR);
+
+// ─── PARTICLE SYSTEM ─────────────────────────────────────────────────────────
+const pc  = document.getElementById('bgParts');
+const ctx = pc.getContext('2d');
+function rsz() { pc.width = innerWidth; pc.height = innerHeight; }
+rsz(); addEventListener('resize', rsz);
+
+class Pt {
+    constructor(scattered) { this.reset(scattered); }
+    reset(sc = false) {
+        this.x   = Math.random() * pc.width;
+        this.y   = sc ? Math.random() * pc.height : pc.height + 20 + Math.random() * 50;
+        this.vy  = -(Math.random() * 0.55 + 0.12);
+        this.vx  = (Math.random() - 0.5) * 0.32;
+        this.al  = Math.random() * 0.32 + 0.06;
+        this.fd  = Math.random() * 0.002 + 0.0004;
+        this.hrt = Math.random() < 0.4;
+        this.hs  = Math.random() * 7 + 4;
+        this.r   = Math.random() * 2.2 + 0.6;
+        this.rot = Math.random() * Math.PI * 2;
+        this.rv  = (Math.random() - 0.5) * 0.012;
+        this.wb  = Math.random() * Math.PI * 2;
+        this.ws  = Math.random() * 0.018 + 0.004;
+        const cl = [[345,68,78],[350,62,82],[335,55,76],[325,58,80],[0,65,82],[355,48,85],[315,40,80]];
+        const c  = cl[Math.floor(Math.random() * cl.length)];
+        this.h = c[0]; this.s = c[1]; this.l = c[2];
+    }
+    upd() {
+        this.wb += this.ws;
+        this.x  += this.vx + Math.sin(this.wb) * 0.22;
+        this.y  += this.vy;
+        this.rot += this.rv;
+        if (this.y < pc.height * 0.12) this.al -= this.fd * 3.5;
+        if (this.y < -20 || this.al <= 0) this.reset();
+    }
+    drw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.al);
+        if (this.hrt) {
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.rot);
+            ctx.fillStyle = `hsl(${this.h},${this.s}%,${this.l}%)`;
+            const s = this.hs / 12;
+            ctx.beginPath();
+            ctx.moveTo(0, s*3);
+            ctx.bezierCurveTo(0,0, -s*5,0, -s*5,s*3);
+            ctx.bezierCurveTo(-s*5,s*6, 0,s*9, 0,s*11);
+            ctx.bezierCurveTo(0,s*9, s*5,s*6, s*5,s*3);
+            ctx.bezierCurveTo(s*5,0, 0,0, 0,s*3);
+            ctx.fill();
+        } else {
+            ctx.fillStyle = `hsl(${this.h},${this.s}%,${this.l}%)`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.restore();
+    }
+}
+
+const parts = Array.from({length: 45}, (_, i) => new Pt(i < 32));
+(function loop() {
+    ctx.clearRect(0, 0, pc.width, pc.height);
+    parts.forEach(p => { p.upd(); p.drw(); });
+    requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

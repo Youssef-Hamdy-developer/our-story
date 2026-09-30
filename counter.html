@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>من يوم ما قلتلك 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cairo', sans-serif;
+      background: #fce8ef url(images/111.jpg) center / cover fixed;
+      color: #7a4b56;
+      overflow-x: hidden;
+
+      opacity: 0;
+      transform: scale(1.025);
+      filter: blur(7px);
+      animation: counterEnter 1.05s cubic-bezier(.22,.9,.3,1) forwards;
+    }
+
+    @keyframes counterEnter {
+      0% {
+        opacity: 0;
+        transform: scale(1.025);
+        filter: blur(7px);
+      }
+
+      55% {
+        opacity: 1;
+        filter: blur(1px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+    }
+
+    .float {
+      position: fixed;
+      bottom: -40px;
+      font-size: 1.4rem;
+      opacity: .7;
+      animation: rise linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rise {
+      to {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      width: min(92vw, 380px);
+      padding: 28px 18px 24px;
+      text-align: center;
+
+      background: rgba(255, 182, 193, .35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      border: 1.5px solid rgba(255, 255, 255, .55);
+      border-radius: 24px;
+
+      box-shadow: 0 8px 32px rgba(255, 143, 163, .3);
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .heart {
+      font-size: 3.6rem;
+      display: inline-block;
+      animation: beat 1.3s ease-in-out infinite;
+      filter: drop-shadow(0 6px 14px rgba(255, 77, 109, .45));
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.25);
+      }
+
+      30% {
+        transform: scale(1);
+      }
+
+      45% {
+        transform: scale(1.15);
+      }
+    }
+
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin: 6px 0 4px;
+      line-height: 1.6;
+    }
+
+    .sub {
+      font-size: .9rem;
+      font-weight: 500;
+      opacity: .85;
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, .45);
+      border: 1px solid rgba(255, 255, 255, .7);
+      border-radius: 16px;
+      padding: 12px 4px 8px;
+    }
+
+    .num {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: #e0456b;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .num.pop {
+      animation: pop .35s ease;
+    }
+
+    @keyframes pop {
+      50% {
+        transform: scale(1.25);
+      }
+    }
+
+    .lbl {
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .total {
+      margin-top: 18px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .total b {
+      color: #e0456b;
+      font-size: 1.2rem;
+    }
+
+    /* زر الانتقال */
+
+    .next-btn {
+      margin-top: 22px;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+
+      background: linear-gradient(135deg, #ff758f, #ff4f70);
+      color: white;
+
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 22px rgba(255, 77, 109, .3),
+        0 0 0 4px rgba(255,255,255,.45);
+
+      transition: .3s ease;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+    }
+
+    .next-btn:active {
+      transform: scale(.96);
+    }
+
+    /* انتقال */
+
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255,255,255,.95) 0%,
+          rgba(255,210,228,.92) 25%,
+          rgba(252,232,239,.98) 60%,
+          rgba(241,184,207,1) 100%
+        );
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: opacity .7s ease;
+    }
+
+    .page-transition::before {
+      content: "💗";
+
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%) scale(.3);
+
+      font-size: 5rem;
+      opacity: 0;
+
+      filter: drop-shadow(0 10px 25px rgba(255,77,109,.35));
+    }
+
+    .page-transition.go {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .page-transition.go::before {
+      animation: transitionHeart 1s ease forwards;
+    }
+
+    @keyframes transitionHeart {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.3);
+      }
+
+      25% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.15);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(.95);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(7);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="heart">💗</div>
+
+    <h1>من اللحظة اللي قلتلك فيها بحبك</h1>
+
+    <p class="sub">
+      وقلبي لسه بيعدّ كل ثانية معاكي
+    </p>
+
+    <div class="grid">
+
+      <div class="box" id="boxY">
+        <span class="num" data-k="y">0</span>
+        <span class="lbl">سنة</span>
+      </div>
+
+      <div class="box">
+        <span class="num" data-k="m">0</span>
+        <span class="lbl">شهر</span>
+      </div>
+
+      <div class="box">
+        <span class="num" data-k="d">0</span>
+        <span class="lbl">يوم</span>
+      </div>
+
+      <div class="box">
+        <span class="num" data-k="h">0</span>
+        <span class="lbl">ساعة</span>
+      </div>
+
+      <div class="box">
+        <span class="num" data-k="mi">0</span>
+        <span class="lbl">دقيقة</span>
+      </div>
+
+      <div class="box">
+        <span class="num" data-k="s">0</span>
+        <span class="lbl">ثانية</span>
+      </div>
+
+    </div>
+
+    <p class="total">
+      يعني <b id="totalDays">0</b> يوم من الحب 💕
+    </p>
+
+    <button class="next-btn" id="nextBtn">
+      كمّلي... عندي كام سؤال ليكي 🌷
+    </button>
+
+  </div>
+
+  <div class="page-transition" id="transition"></div>
+
+  <script>
+
+    // وقت الاعتراف
+    const START = new Date(2026, 5, 15, 7, 44, 0);
+
+    const nums = {};
+
+    document.querySelectorAll('.num').forEach(el => {
+      nums[el.dataset.k] = el;
+    });
+
+    function diff(a, b) {
+
+      let y = b.getFullYear() - a.getFullYear();
+      let m = b.getMonth() - a.getMonth();
+      let d = b.getDate() - a.getDate();
+      let h = b.getHours() - a.getHours();
+      let mi = b.getMinutes() - a.getMinutes();
+      let s = b.getSeconds() - a.getSeconds();
+
+      if (s < 0) {
+        s += 60;
+        mi--;
+      }
+
+      if (mi < 0) {
+        mi += 60;
+        h--;
+      }
+
+      if (h < 0) {
+        h += 24;
+        d--;
+      }
+
+      if (d < 0) {
+        d += new Date(
+          b.getFullYear(),
+          b.getMonth(),
+          0
+        ).getDate();
+
+        m--;
+      }
+
+      if (m < 0) {
+        m += 12;
+        y--;
+      }
+
+      return {
+        y,
+        m,
+        d,
+        h,
+        mi,
+        s
+      };
+    }
+
+    function tick() {
+
+      const now = new Date();
+      const t = diff(START, now);
+
+      for (const k in t) {
+
+        const val = String(t[k]);
+
+        if (nums[k].textContent !== val) {
+
+          nums[k].textContent = val;
+
+          nums[k].classList.remove("pop");
+
+          void nums[k].offsetWidth;
+
+          nums[k].classList.add("pop");
+        }
+      }
+
+      document.getElementById("boxY").style.display =
+        t.y > 0 ? "" : "none";
+
+      document.getElementById("totalDays").textContent =
+        Math.floor((now - START) / 86400000);
+    }
+
+    tick();
+
+    setInterval(tick, 1000);
+
+
+    // قلوب الخلفية
+
+    const icons = [
+      "💕",
+      "💖",
+      "🌸",
+      "✨",
+      "💗"
+    ];
+
+    for (let i = 0; i < 14; i++) {
+
+      const f = document.createElement("div");
+
+      f.className = "float";
+
+      f.textContent = icons[i % icons.length];
+
+      f.style.left =
+        Math.random() * 95 + "vw";
+
+      f.style.animationDuration =
+        8 + Math.random() * 8 + "s";
+
+      f.style.animationDelay =
+        -Math.random() * 12 + "s";
+
+      document.body.appendChild(f);
+    }
+
+
+    // الانتقال للأسئلة
+
+    document.getElementById("nextBtn").addEventListener("click", function () {
+
+      const transition =
+        document.getElementById("transition");
+
+      transition.classList.add("go");
+
+      setTimeout(() => {
+        window.location.href = "quiz.html";
+      }, 850);
+
+    });
+
+  </script>
+
+</body>
+</html>

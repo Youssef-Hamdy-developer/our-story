@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <title>رسالة أخيرة 💗</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+
+      min-height: 100vh;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 25px 15px;
+
+      font-family: 'Cairo', sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,240,246,.8),
+          rgba(255,214,230,.82)
+        ),
+        url("images/111.jpg")
+        center / cover fixed;
+
+      color: #7a4b56;
+
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      opacity: 0;
+
+      animation:
+        pageIn 1.2s ease forwards;
+    }
+
+
+    @keyframes pageIn {
+
+      from {
+        opacity: 0;
+
+        transform:
+          scale(.96);
+
+        filter:
+          blur(8px);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          scale(1);
+
+        filter:
+          blur(0);
+      }
+    }
+
+
+    /* القلوب */
+
+    .float {
+
+      position: fixed;
+
+      bottom: -40px;
+
+      font-size: 1.5rem;
+
+      opacity: .65;
+
+      pointer-events: none;
+
+      animation:
+        rise linear infinite;
+    }
+
+
+    @keyframes rise {
+
+      to {
+
+        transform:
+          translateY(-110vh)
+          rotate(25deg);
+
+        opacity: 0;
+      }
+    }
+
+
+    /* الكارت */
+
+    .final-card {
+
+      width: min(92vw, 430px);
+
+      padding: 30px 25px 30px;
+      margin: 20px 0;
+
+      text-align: center;
+
+      background:
+        rgba(255,255,255,.38);
+
+      backdrop-filter:
+        blur(13px);
+
+      -webkit-backdrop-filter:
+        blur(13px);
+
+      border:
+        1.5px solid
+        rgba(255,255,255,.7);
+
+      border-radius: 30px;
+
+      box-shadow:
+        0 15px 45px
+        rgba(220,80,130,.2);
+
+      position: relative;
+
+      z-index: 2;
+    }
+
+
+    .final-heart {
+
+      font-size: 4.2rem;
+
+      display: inline-block;
+
+      filter:
+        drop-shadow(
+          0 8px 18px
+          rgba(255,77,109,.35)
+        );
+
+      animation:
+        heartbeat 1.5s
+        ease-in-out infinite;
+    }
+
+
+    @keyframes heartbeat {
+
+      0%,100% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.2);
+      }
+
+      30% {
+        transform: scale(1);
+      }
+
+      45% {
+        transform: scale(1.1);
+      }
+    }
+
+
+    h1 {
+
+      margin-top: 10px;
+
+      font-size: 1.5rem;
+
+      font-weight: 900;
+
+      color: #a83f5f;
+    }
+
+
+    .hint {
+
+      margin-top: 8px;
+
+      margin-bottom: 24px;
+
+      font-size: .9rem;
+
+      opacity: .75;
+    }
+
+
+    /* زر الرسالة */
+
+    #openBtn {
+
+      border: none;
+
+      padding: 13px 30px;
+
+      border-radius: 50px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff758f,
+          #ff4f70
+        );
+
+      color: white;
+
+      font-family: inherit;
+
+      font-size: 1rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 8px 25px
+        rgba(255,77,109,.3);
+
+      transition: .3s ease;
+    }
+
+
+    #openBtn:hover {
+
+      transform:
+        translateY(-3px)
+        scale(1.04);
+    }
+
+
+    #openBtn:active {
+
+      transform:
+        scale(.96);
+    }
+
+
+    /* الرسالة */
+
+    .message {
+
+      display: none;
+
+      animation:
+        reveal .9s ease forwards;
+    }
+
+
+    .message.show {
+
+      display: block;
+    }
+
+
+    @keyframes reveal {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          translateY(18px);
+
+        filter:
+          blur(5px);
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          translateY(0);
+
+        filter:
+          blur(0);
+      }
+    }
+
+
+    .line {
+
+      font-size: 1rem;
+
+      line-height: 2;
+
+      font-weight: 700;
+
+      margin-bottom: 12px;
+
+      color: #754653;
+    }
+
+
+    .main-line {
+
+      font-size: 1.15rem;
+
+      color: #a83f5f;
+
+      margin-bottom: 18px;
+    }
+
+
+    .signature {
+
+      margin-top: 22px;
+
+      font-size: .95rem;
+
+      color: #c44569;
+
+      font-weight: 900;
+    }
+
+
+    /* زر إعادة الرحلة */
+
+    .replay {
+
+      margin-top: 25px;
+
+      border: none;
+
+      background:
+        rgba(255,255,255,.5);
+
+      color: #a83f5f;
+
+      border:
+        1px solid
+        rgba(255,255,255,.7);
+
+      padding: 9px 20px;
+
+      border-radius: 50px;
+
+      font-family: inherit;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: .25s ease;
+    }
+
+
+    .replay:hover {
+
+      background:
+        rgba(255,255,255,.75);
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    /* انتقال */
+
+    .transition {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 999;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,.97),
+          rgba(255,210,228,.96),
+          #f1b8cf
+        );
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .7s ease;
+    }
+
+
+    .transition.show {
+
+      opacity: 1;
+    }
+
+
+    .transition::before {
+
+      content: "💗";
+
+      position: absolute;
+
+      left: 50%;
+
+      top: 50%;
+
+      font-size: 5rem;
+
+      transform:
+        translate(-50%,-50%)
+        scale(.3);
+
+      opacity: 0;
+    }
+
+
+    .transition.show::before {
+
+      animation:
+        heartOut 1s ease forwards;
+    }
+
+
+    @keyframes heartOut {
+
+      0% {
+
+        opacity: 0;
+
+        transform:
+          translate(-50%,-50%)
+          scale(.3);
+      }
+
+      25% {
+
+        opacity: 1;
+
+        transform:
+          translate(-50%,-50%)
+          scale(1.15);
+      }
+
+      100% {
+
+        opacity: 0;
+
+        transform:
+          translate(-50%,-50%)
+          scale(7);
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <div class="final-card">
+
+    <div class="final-heart">
+      💗
+    </div>
+
+
+    <h1>
+      رسالة أخيرة...
+    </h1>
+
+
+    <p class="hint">
+      قبل ما تخرجي من الموقع، افتحيها 🤍
+    </p>
+
+
+    <button id="openBtn">
+      اضغطي هنا... 💕
+    </button>
+
+
+    <div class="message" id="message">
+
+      <p class="line main-line">
+        وبكده وصلنا لآخر حاجة عملتها ليكي.
+      </p>
+
+
+      <p class="line">
+        يمكن الموقع كله مجرد شوية صور وكلام
+        وأسئلة وعدّاد...
+      </p>
+
+
+      <p class="line">
+        بس كل تفصيلة فيه اتحطت عشان تفضل
+        عندك ذكرى حلوة.
+      </p>
+
+
+      <p class="line">
+        ومهما حصل بعد كده،
+        أنا هفضل مبسوط إن كان لينا حكاية
+        تستاهل يتعمل عشانها كل ده. 💗
+      </p>
+
+
+      <p class="signature">
+        من يويو ليكي 🌷
+      </p>
+
+
+      <button class="replay" id="replayBtn">
+        إعادة الرحلة ↻
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="transition" id="transition"></div>
+
+
+  <script>
+
+    const openBtn =
+      document.getElementById("openBtn");
+
+    const message =
+      document.getElementById("message");
+
+    const replayBtn =
+      document.getElementById("replayBtn");
+
+    const transition =
+      document.getElementById("transition");
+
+
+    openBtn.addEventListener("click", function () {
+
+      openBtn.style.display = "none";
+
+      message.classList.add("show");
+
+    });
+
+
+    replayBtn.addEventListener("click", function () {
+
+      transition.classList.add("show");
+
+      setTimeout(() => {
+
+        window.location.href =
+          "index.html";
+
+      }, 850);
+
+    });
+
+
+    // القلوب الخلفية
+
+    const icons = [
+      "💕",
+      "💖",
+      "🌸",
+      "✨",
+      "💗"
+    ];
+
+
+    for (let i = 0; i < 14; i++) {
+
+      const f =
+        document.createElement("div");
+
+      f.className = "float";
+
+      f.textContent =
+        icons[i % icons.length];
+
+      f.style.left =
+        Math.random() * 95 + "vw";
+
+      f.style.animationDuration =
+        8 + Math.random() * 8 + "s";
+
+      f.style.animationDelay =
+        -Math.random() * 12 + "s";
+
+      document.body.appendChild(f);
+    }
+
+  </script>
+
+</body>
+
+</html>

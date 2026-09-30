@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>كام سؤال صغير 💕</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px 15px;
+
+      font-family: 'Cairo', sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,240,246,.82),
+          rgba(255,214,230,.8)
+        ),
+        url("images/111.jpg") center / cover fixed;
+
+      color: #7a4b56;
+
+      opacity: 0;
+      animation: pageIn 1s ease forwards;
+
+      overflow-x: hidden;
+    }
+
+    @keyframes pageIn {
+
+      from {
+        opacity: 0;
+        transform: scale(.97);
+        filter: blur(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
+    }
+
+
+    /* الخلفية */
+
+    .float {
+
+      position: fixed;
+
+      bottom: -40px;
+
+      font-size: 1.4rem;
+
+      opacity: .65;
+
+      pointer-events: none;
+
+      animation: rise linear infinite;
+    }
+
+    @keyframes rise {
+
+      to {
+        transform:
+          translateY(-110vh)
+          rotate(25deg);
+
+        opacity: 0;
+      }
+    }
+
+
+    /* الكارت */
+
+    .quiz-card {
+
+      width: min(94vw, 430px);
+
+      padding: 30px 20px 25px;
+
+      background:
+        rgba(255,255,255,.34);
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      border:
+        1.5px solid rgba(255,255,255,.65);
+
+      border-radius: 28px;
+
+      box-shadow:
+        0 12px 40px rgba(220,80,130,.2);
+
+      text-align: center;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+
+    .top-heart {
+
+      font-size: 3.3rem;
+
+      display: inline-block;
+
+      animation: heartbeat 1.4s infinite;
+
+      filter:
+        drop-shadow(
+          0 7px 15px
+          rgba(255,77,109,.35)
+        );
+    }
+
+    @keyframes heartbeat {
+
+      0%,100% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.2);
+      }
+
+      30% {
+        transform: scale(1);
+      }
+
+      45% {
+        transform: scale(1.1);
+      }
+    }
+
+
+    h1 {
+
+      margin-top: 8px;
+
+      font-size: 1.45rem;
+
+      font-weight: 900;
+
+      color: #a83f5f;
+    }
+
+
+    .intro {
+
+      margin-top: 5px;
+
+      margin-bottom: 22px;
+
+      font-size: .9rem;
+
+      opacity: .8;
+    }
+
+
+    /* السؤال */
+
+    .question {
+
+      display: none;
+
+      animation: questionIn .45s ease;
+    }
+
+    .question.active {
+
+      display: block;
+    }
+
+    @keyframes questionIn {
+
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    .question-number {
+
+      font-size: .8rem;
+
+      color: #c44569;
+
+      font-weight: 700;
+
+      margin-bottom: 8px;
+    }
+
+
+    .question-text {
+
+      font-size: 1.1rem;
+
+      font-weight: 900;
+
+      line-height: 1.7;
+
+      margin-bottom: 17px;
+    }
+
+
+    /* الاختيارات */
+
+    .options {
+
+      display: grid;
+
+      gap: 10px;
+    }
+
+
+    .option {
+
+      width: 100%;
+
+      border: 1px solid
+        rgba(255,255,255,.7);
+
+      background:
+        rgba(255,255,255,.48);
+
+      color: #7a4b56;
+
+      border-radius: 15px;
+
+      padding: 12px;
+
+      font-family: inherit;
+
+      font-size: .92rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: .25s ease;
+    }
+
+
+    .option:hover {
+
+      transform: translateY(-2px);
+
+      background:
+        rgba(255,255,255,.72);
+
+      box-shadow:
+        0 7px 18px
+        rgba(220,80,130,.15);
+    }
+
+
+    .option.selected {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff8fa3,
+          #ff6f91
+        );
+
+      color: white;
+
+      border-color: transparent;
+
+      transform: scale(1.02);
+
+      box-shadow:
+        0 7px 20px
+        rgba(255,77,109,.25);
+    }
+
+
+    /* سؤال الكتابة */
+
+    textarea {
+
+      width: 100%;
+
+      min-height: 105px;
+
+      resize: none;
+
+      border: 1px solid
+        rgba(255,255,255,.7);
+
+      border-radius: 16px;
+
+      padding: 13px;
+
+      font-family: inherit;
+
+      font-size: .9rem;
+
+      color: #6f4650;
+
+      background:
+        rgba(255,255,255,.5);
+
+      outline: none;
+    }
+
+    textarea:focus {
+
+      box-shadow:
+        0 0 18px
+        rgba(255,143,163,.3);
+
+      border-color:
+        rgba(255,143,163,.8);
+    }
+
+
+    /* زر التالي */
+
+    .next {
+
+      margin-top: 20px;
+
+      border: none;
+
+      padding: 11px 27px;
+
+      border-radius: 50px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff758f,
+          #ff4f70
+        );
+
+      color: white;
+
+      font-family: inherit;
+
+      font-size: .95rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 7px 20px
+        rgba(255,77,109,.3);
+
+      transition: .25s ease;
+    }
+
+    .next:hover {
+
+      transform:
+        translateY(-2px)
+        scale(1.03);
+    }
+
+
+    .progress {
+
+      height: 5px;
+
+      width: 100%;
+
+      background:
+        rgba(255,255,255,.45);
+
+      border-radius: 10px;
+
+      margin-top: 22px;
+
+      overflow: hidden;
+    }
+
+
+    .progress-bar {
+
+      height: 100%;
+
+      width: 0%;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ff758c,
+          #ff4d6d
+        );
+
+      border-radius: 10px;
+
+      transition:
+        width .4s ease;
+    }
+
+
+    /* الانتقال */
+
+    .transition {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 999;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,.96),
+          rgba(255,210,228,.96),
+          #f1b8cf
+        );
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      transition: .7s ease;
+    }
+
+    .transition.show {
+
+      opacity: 1;
+    }
+
+    .transition::before {
+
+      content: "💗";
+
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      font-size: 5rem;
+
+      transform:
+        translate(-50%,-50%)
+        scale(.3);
+
+      opacity: 0;
+    }
+
+    .transition.show::before {
+
+      animation:
+        heartOut 1s ease forwards;
+    }
+
+    @keyframes heartOut {
+
+      0% {
+        opacity: 0;
+        transform:
+          translate(-50%,-50%)
+          scale(.3);
+      }
+
+      25% {
+        opacity: 1;
+        transform:
+          translate(-50%,-50%)
+          scale(1.15);
+      }
+
+      100% {
+        opacity: 0;
+        transform:
+          translate(-50%,-50%)
+          scale(7);
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="quiz-card">
+
+    <div class="top-heart">💗</div>
+
+    <h1>قبل ما نخلص... عندي كام سؤال ليكي</h1>
+
+    <p class="intro">
+      مفيش إجابة غلط... متفكريش كتير 😂
+    </p>
+
+
+    <!-- السؤال 1 -->
+
+    <div class="question active">
+
+      <div class="question-number">
+        السؤال 1 من 5
+      </div>
+
+      <div class="question-text">
+        إيه أكتر حاجة بتحبيها فينا؟ 💕
+      </div>
+
+      <div class="options">
+
+        <button class="option">
+          هزارنا 😂
+        </button>
+
+        <button class="option">
+          كلامنا سوا 💬
+        </button>
+
+        <button class="option">
+          إننا بنفهم بعض 💕
+        </button>
+
+        <button class="option">
+          كلهم... مش هختار 😂
+        </button>
+
+      </div>
+
+      <button class="next">
+        اللي بعده 🌸
+      </button>
+
+    </div>
+
+
+    <!-- السؤال 2 -->
+
+    <div class="question">
+
+      <div class="question-number">
+        السؤال 2 من 5
+      </div>
+
+      <div class="question-text">
+        مين فينا بيبدأ الكلام غالبًا؟ 👀
+      </div>
+
+      <div class="options">
+
+        <button class="option">
+          أنا 😌
+        </button>
+
+        <button class="option">
+          إنتِ 😂
+        </button>
+
+        <button class="option">
+          إحنا الاتنين
+        </button>
+
+        <button class="option">
+          الموضوع محتاج تحقيق 🕵️
+        </button>
+
+      </div>
+
+      <button class="next">
+        اللي بعده 💗
+      </button>
+
+    </div>
+
+
+    <!-- السؤال 3 -->
+
+    <div class="question">
+
+      <div class="question-number">
+        السؤال 3 من 5
+      </div>
+
+      <div class="question-text">
+        لو قصتنا كانت لون... تختاري إيه؟ 🎨
+      </div>
+
+      <div class="options">
+
+        <button class="option">
+          🌸 وردي
+        </button>
+
+        <button class="option">
+          💙 أزرق
+        </button>
+
+        <button class="option">
+          💜 بنفسجي
+        </button>
+
+        <button class="option">
+         ✨ لون مش موجود
+        </button>
+
+      </div>
+
+      <button class="next">
+        اللي بعده ✨
+      </button>
+
+    </div>
+
+
+    <!-- السؤال 4 -->
+
+    <div class="question">
+
+      <div class="question-number">
+        السؤال 4 من 5
+      </div>
+
+      <div class="question-text">
+        إيه أكتر حاجة نفسك نعملها سوا يومًا ما؟ 🌷
+      </div>
+
+      <textarea
+        id="freeAnswer"
+        placeholder="اكتبي اللي نفسك فيه براحتك...">
+      </textarea>
+
+      <button class="next">
+        اللي بعده 💕
+      </button>
+
+    </div>
+
+
+    <!-- السؤال 5 -->
+
+    <div class="question">
+
+      <div class="question-number">
+        السؤال 5 من 5
+      </div>
+
+      <div class="question-text">
+        ولو رجعنا لأول يوم... كنتِ هتختاري نفس البداية؟ 🥹
+      </div>
+
+      <div class="options">
+
+        <button class="option">
+          أكيد 💗
+        </button>
+
+        <button class="option">
+          طبعًا 😂
+        </button>
+
+        <button class="option">
+          هغيّر حاجات بسيطة بس
+        </button>
+
+        <button class="option">
+          سؤال صعب أوي 😭
+        </button>
+
+      </div>
+
+      <button class="next" id="finishBtn">
+        خلصنا 🌸
+      </button>
+
+    </div>
+
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+  </div>
+
+
+  <div class="transition" id="transition"></div>
+
+
+  <script>
+
+    const questions =
+      document.querySelectorAll(".question");
+
+    let current = 0;
+
+    const progressBar =
+      document.getElementById("progressBar");
+
+
+    function updateProgress() {
+
+      const percentage =
+        ((current + 1) / questions.length) * 100;
+
+      progressBar.style.width =
+        percentage + "%";
+    }
+
+    updateProgress();
+
+
+    // الاختيارات
+
+    document.querySelectorAll(".option")
+      .forEach(option => {
+
+        option.addEventListener("click", function () {
+
+          const parent =
+            this.parentElement;
+
+          parent
+            .querySelectorAll(".option")
+            .forEach(btn =>
+              btn.classList.remove("selected")
+            );
+
+          this.classList.add("selected");
+        });
+
+      });
+
+
+    // أزرار التالي
+
+    document.querySelectorAll(".next")
+      .forEach(button => {
+
+        button.addEventListener("click", function () {
+
+          if (current === questions.length - 1) {
+
+            const transition =
+              document.getElementById("transition");
+
+            transition.classList.add("show");
+
+            setTimeout(() => {
+
+              window.location.href =
+                "final.html";
+
+            }, 850);
+
+            return;
+          }
+
+
+          questions[current]
+            .classList.remove("active");
+
+          current++;
+
+          questions[current]
+            .classList.add("active");
+
+          updateProgress();
+
+        });
+
+      });
+
+
+    // القلوب الخلفية
+
+    const icons = [
+      "💕",
+      "💖",
+      "🌸",
+      "✨",
+      "💗"
+    ];
+
+    for (let i = 0; i < 12; i++) {
+
+      const f =
+        document.createElement("div");
+
+      f.className = "float";
+
+      f.textContent =
+        icons[i % icons.length];
+
+      f.style.left =
+        Math.random() * 95 + "vw";
+
+      f.style.animationDuration =
+        8 + Math.random() * 8 + "s";
+
+      f.style.animationDelay =
+        -Math.random() * 12 + "s";
+
+      document.body.appendChild(f);
+    }
+
+  </script>
+
+</body>
+
+</html>
